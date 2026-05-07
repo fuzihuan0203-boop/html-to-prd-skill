@@ -123,6 +123,9 @@ Required screenshot workflow:
 - Save screenshots next to the generated HTML PRD under a `screenshots/` folder, and reference them with relative paths from the HTML file.
 - Use meaningful filenames derived from the component path, such as `用户管理-查询筛选-搜索按钮.png`.
 - Verify that every `<img>` referenced by the HTML PRD exists on disk and is viewable through the generated HTML.
+- Verify screenshot-to-description alignment before completion. For every figure, the image content must match the adjacent `页面-模块-组件名称`, `alt`, caption, and requirement text below it.
+- If a screenshot shows a different component, page area, module, state, or button than the requirement describes, treat it as invalid. Re-locate the component, re-render the required UI state, re-capture the screenshot, replace the image reference, and re-check the alignment.
+- Prefer component-level element screenshots. Use full-page screenshots only when the requirement describes the whole page or a broad layout region, and annotate the caption so the described component is unmistakable.
 
 Do not use screenshot placeholders. If a real screenshot cannot be captured because the code is incomplete, dependencies are missing, rendering fails, or a component cannot be reached, stop and report the blocker with the missing screenshot list instead of delivering a completed PRD.
 
@@ -364,6 +367,8 @@ Output a standalone HTML document in Chinese unless the user requests otherwise.
 - Do not use deferred screenshot labels, screenshot placeholders, or broken image references. If required screenshots cannot be captured, stop and report the blocker instead of delivering a completed PRD.
 - Pair screenshots with component paths and captions. The caption must include the full `页面-模块-组件名称` path and a concise explanation of what the image proves.
 - Verify before completion that each `<img src="...">` in the HTML PRD points to an existing screenshot file that can be viewed when the HTML file is opened.
+- Verify before completion that every screenshot matches the component being described immediately next to or below it. The screenshot, filename, `alt`, caption, component path, and requirement description must all refer to the same page-module-component and UI state.
+- If any screenshot does not match its component description, do not deliver the PRD. Re-capture the correct component/state, update the HTML image reference, and repeat the alignment check.
 - Treat button interaction logic and component display logic as priority content, not optional detail.
 - For every button or clickable action, specify trigger conditions, enabled/disabled logic, click result, state changes, validation dependencies, success feedback, failure feedback, navigation, and API calls.
 - For every important component, specify default state, display/hide logic, enabled/disabled logic, data source, state changes, empty/error/loading states, and permission or condition controls.
