@@ -7,7 +7,7 @@ description: Reverse-engineer existing HTML/CSS/JavaScript pages, static fronten
 
 ## Role
 
-Act as a senior product manager and frontend product analyst. Read existing HTML, CSS, and JavaScript evidence, then generate a Chinese HTML PRD that describes what the current page or prototype already implements, with automatically captured component screenshots embedded in the document for concrete requirement descriptions.
+Act as a senior product manager and frontend product analyst. Read existing HTML, CSS, and JavaScript code, then generate a Chinese HTML PRD that describes what the current page or prototype already implements, with automatically captured component screenshots embedded in the document for concrete requirement descriptions.
 
 Do not invent hidden business logic. If something cannot be determined from code, mark it as `待确认`. Clearly distinguish `代码已实现`, `根据页面推测需要`, and `待确认`.
 
@@ -24,11 +24,11 @@ Determine the analysis boundary before writing the PRD:
 - Role or permission hints such as hidden controls, disabled states, admin labels, permission menus, or conditional rendering.
 - Mock data, hardcoded data, fixtures, placeholder content, or generated prototype artifacts.
 
-If files are incomplete, continue with available evidence and mark missing parts as `待确认`.
+If files are incomplete, continue with available code and mark missing parts as `待确认`.
 
-### 2. Extract Product Evidence
+### 2. Extract Product Structure
 
-Collect and group evidence from DOM structure, visible text, attributes, scripts, styles, and filenames.
+Collect and group product information from DOM structure, visible text, attributes, scripts, styles, and filenames.
 
 For page metadata, extract:
 
@@ -54,12 +54,12 @@ For functional modules, group UI into product modules such as:
 
 When describing any UI component in the PRD, always use the full naming format `页面-模块-组件名称`. Do not refer to a component by component name alone. Apply this to fields, buttons, tabs, tables, filters, modals, upload controls, navigation items, cards, charts, pagination controls, and any other UI element. If the page or module name is unclear, use `待确认页面` or `待确认模块` rather than omitting the hierarchy.
 
-For fields, use evidence from `label`, `placeholder`, `name`, `id`, `aria-label`, `title`, `required`, `pattern`, `maxlength`, `min`, `max`, `type`, `data-*`, option text, and visible copy.
+For fields, analyze `label`, `placeholder`, `name`, `id`, `aria-label`, `title`, `required`, `pattern`, `maxlength`, `min`, `max`, `type`, `data-*`, option text, and visible copy.
 
 Field inventory table:
 
-| 字段名称 | 组件路径 | 控件类型 | 是否必填 | 默认值 | 校验规则 | 选项值 | 业务含义 | 证据来源 |
-|---|---|---|---|---|---|---|---|---|
+| 字段名称 | 组件路径 | 控件类型 | 是否必填 | 默认值 | 校验规则 | 选项值 | 业务含义 |
+|---|---|---|---|---|---|---|---|
 
 For tables or lists, extract:
 
@@ -70,8 +70,8 @@ For actions, include buttons, links, form submit, search/reset, add/edit/delete,
 
 Action inventory table:
 
-| 操作名称 | 组件路径 | 触发元素 | 前置条件 | 启用/禁用逻辑 | 用户动作 | 系统响应 | 状态变化 | 成功反馈 | 失败反馈 | 跳转/接口 | 证据来源 |
-|---|---|---|---|---|---|---|---|---|---|---|---|
+| 操作名称 | 组件路径 | 触发元素 | 前置条件 | 启用/禁用逻辑 | 用户动作 | 系统响应 | 状态变化 | 成功反馈 | 失败反馈 | 跳转/接口 |
+|---|---|---|---|---|---|---|---|---|---|---|
 
 For component display logic, describe how each important component appears, hides, changes state, or renders data. Cover:
 
@@ -81,12 +81,12 @@ For component display logic, describe how each important component appears, hide
 - 数据来源 and data binding.
 - Loading, empty, error, disabled, selected, expanded, collapsed, hover/focus, and validation states.
 - Conditional rendering caused by route, tab, permission, form value, API result, local storage, mock data, or JavaScript state.
-- Evidence source for every display rule; mark unclear logic as `待确认`.
+- Mark unclear display logic as `待确认`.
 
 Component display logic table:
 
-| 组件路径 | 组件类型 | 默认状态 | 显示/隐藏逻辑 | 启用/禁用逻辑 | 数据来源 | 状态变化 | 空/错/加载状态 | 权限/条件控制 | 证据来源 |
-|---|---|---|---|---|---|---|---|---|---|
+| 组件路径 | 组件类型 | 默认状态 | 显示/隐藏逻辑 | 启用/禁用逻辑 | 数据来源 | 状态变化 | 空/错/加载状态 | 权限/条件控制 |
+|---|---|---|---|---|---|---|---|---|
 
 ### 3. Extract APIs and Data Dependencies
 
@@ -234,7 +234,7 @@ Output a standalone HTML document in Chinese unless the user requests otherwise.
     <h2>4. 已实现功能清单</h2>
     <table>
       <thead>
-        <tr><th>模块</th><th>功能点</th><th>功能说明</th><th>页面/区域</th><th>证据来源</th><th>状态</th></tr>
+        <tr><th>模块</th><th>功能点</th><th>功能说明</th><th>页面/区域</th><th>状态</th></tr>
       </thead>
       <tbody></tbody>
     </table>
@@ -259,13 +259,13 @@ Output a standalone HTML document in Chinese unless the user requests otherwise.
       <h4>组件截图与需求描述</h4>
       <figure>
         <img src="screenshots/[页面-模块-组件名称].png" alt="[页面-模块-组件名称]截图">
-        <figcaption><span class="component-path">[页面-模块-组件名称]</span>：[基于自动截图和代码证据说明该组件的用途、展示内容和交互位置]</figcaption>
+        <figcaption><span class="component-path">[页面-模块-组件名称]</span>：[基于自动截图和代码分析说明该组件的用途、展示内容和交互位置]</figcaption>
       </figure>
 
       <h4>组件显示逻辑</h4>
       <table>
         <thead>
-          <tr><th>组件路径</th><th>组件类型</th><th>默认状态</th><th>显示/隐藏逻辑</th><th>启用/禁用逻辑</th><th>数据来源</th><th>状态变化</th><th>空/错/加载状态</th><th>权限/条件控制</th><th>证据来源</th></tr>
+          <tr><th>组件路径</th><th>组件类型</th><th>默认状态</th><th>显示/隐藏逻辑</th><th>启用/禁用逻辑</th><th>数据来源</th><th>状态变化</th><th>空/错/加载状态</th><th>权限/条件控制</th></tr>
         </thead>
         <tbody></tbody>
       </table>
@@ -273,7 +273,7 @@ Output a standalone HTML document in Chinese unless the user requests otherwise.
       <h4>字段说明</h4>
       <table>
         <thead>
-          <tr><th>字段名称</th><th>组件路径</th><th>控件类型</th><th>是否必填</th><th>默认值</th><th>校验规则</th><th>选项值</th><th>业务含义</th><th>证据来源</th></tr>
+          <tr><th>字段名称</th><th>组件路径</th><th>控件类型</th><th>是否必填</th><th>默认值</th><th>校验规则</th><th>选项值</th><th>业务含义</th></tr>
         </thead>
         <tbody></tbody>
       </table>
@@ -281,13 +281,13 @@ Output a standalone HTML document in Chinese unless the user requests otherwise.
       <h4>操作说明</h4>
       <table>
         <thead>
-          <tr><th>操作名称</th><th>组件路径</th><th>触发元素</th><th>前置条件</th><th>启用/禁用逻辑</th><th>用户动作</th><th>系统响应</th><th>状态变化</th><th>成功反馈</th><th>失败反馈</th><th>跳转/接口</th><th>证据来源</th></tr>
+          <tr><th>操作名称</th><th>组件路径</th><th>触发元素</th><th>前置条件</th><th>启用/禁用逻辑</th><th>用户动作</th><th>系统响应</th><th>状态变化</th><th>成功反馈</th><th>失败反馈</th><th>跳转/接口</th></tr>
         </thead>
         <tbody></tbody>
       </table>
 
       <h4>交互规则</h4>
-      <p>重点描述每个按钮、链接、Tab、弹窗、表单控件、分页、排序、上传/下载控件的触发条件、执行步骤、状态变化、反馈信息和异常路径；没有代码证据时标记为 <code>待确认</code>。</p>
+      <p>重点描述每个按钮、链接、Tab、弹窗、表单控件、分页、排序、上传/下载控件的触发条件、执行步骤、状态变化、反馈信息和异常路径；代码中无法确认的内容标记为 <code>待确认</code>。</p>
 
       <h4>校验规则</h4>
       <p></p>
@@ -365,13 +365,12 @@ Output a standalone HTML document in Chinese unless the user requests otherwise.
 - Pair screenshots with component paths and captions. The caption must include the full `页面-模块-组件名称` path and a concise explanation of what the image proves.
 - Verify before completion that each `<img src="...">` in the HTML PRD points to an existing screenshot file that can be viewed when the HTML file is opened.
 - Treat button interaction logic and component display logic as priority content, not optional detail.
-- For every button or clickable action, specify trigger conditions, enabled/disabled logic, click result, state changes, validation dependencies, success feedback, failure feedback, navigation, API calls, and evidence source.
-- For every important component, specify default state, display/hide logic, enabled/disabled logic, data source, state changes, empty/error/loading states, permission or condition controls, and evidence source.
+- For every button or clickable action, specify trigger conditions, enabled/disabled logic, click result, state changes, validation dependencies, success feedback, failure feedback, navigation, and API calls.
+- For every important component, specify default state, display/hide logic, enabled/disabled logic, data source, state changes, empty/error/loading states, and permission or condition controls.
 - Avoid vague interaction descriptions such as `点击后执行操作` or `显示组件`. Replace them with concrete behavior found in code, or mark the missing detail as `待确认`.
 - Base claims only on code, visible UI, attributes, filenames, routes, config, or hardcoded data.
 - Do not claim an API exists unless it is found in code.
 - Do not convert suggested backend needs into implemented requirements.
-- Preserve concise evidence such as selectors, labels, function names, route names, file paths, or API snippets.
 - Describe every component with the full `页面-模块-组件名称` path; never use only the component name. If page or module cannot be determined, use `待确认页面` or `待确认模块` in the path.
 - Use product-manager-friendly Chinese.
-- When evidence is weak, use cautious language such as `页面显示`, `代码中可见`, `推测需要`, or `待确认`.
+- When code cannot confirm a detail, use cautious language such as `页面显示`, `代码中可见`, `推测需要`, or `待确认`.
