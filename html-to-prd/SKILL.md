@@ -148,13 +148,14 @@ Output a standalone HTML document in Chinese unless the user requests otherwise.
     .layout.toc-collapsed .toc { transform: translateX(-100%); padding-left: 0; padding-right: 0; border-right: 0; }
     .toc-header { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 12px; }
     .toc-title { margin: 0; font-size: 15px; font-weight: 700; color: #111827; }
-    .toc-toggle { border: 1px solid #cbd5e1; background: #fff; color: #111827; border-radius: 6px; padding: 6px 10px; cursor: pointer; }
+    .icon-button { width: 34px; height: 34px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid #cbd5e1; background: #fff; color: #111827; border-radius: 6px; padding: 0; cursor: pointer; }
+    .icon-button svg { width: 18px; height: 18px; stroke: currentColor; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
     .toc ol { list-style: none; padding: 0; margin: 0; }
     .toc li { margin: 4px 0; }
     .toc a { display: block; color: #374151; text-decoration: none; padding: 6px 8px; border-radius: 6px; font-size: 14px; }
     .toc a:hover { background: #f3f4f6; color: #0f766e; }
     .content-wrap { min-width: 0; }
-    .floating-toc-toggle { position: fixed; left: 12px; top: 12px; z-index: 20; border: 1px solid #cbd5e1; background: #fff; color: #111827; border-radius: 6px; padding: 7px 10px; cursor: pointer; box-shadow: 0 4px 12px rgba(15, 23, 42, .12); }
+    .floating-toc-toggle { position: fixed; left: 12px; top: 12px; z-index: 20; box-shadow: 0 4px 12px rgba(15, 23, 42, .12); }
     main { max-width: 1180px; margin: 0 auto; padding: 32px 24px 64px; background: #fff; }
     h1, h2, h3, h4 { color: #111827; line-height: 1.3; }
     table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 14px; }
@@ -178,7 +179,9 @@ Output a standalone HTML document in Chinese unless the user requests otherwise.
 <aside class="toc" aria-label="PRD目录">
   <div class="toc-header">
     <p class="toc-title">目录</p>
-    <button class="toc-toggle" type="button" data-toggle-toc>隐藏</button>
+    <button class="icon-button toc-toggle" type="button" data-toggle-toc aria-label="隐藏目录" title="隐藏目录">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg>
+    </button>
   </div>
   <nav>
     <ol>
@@ -198,7 +201,9 @@ Output a standalone HTML document in Chinese unless the user requests otherwise.
   </nav>
 </aside>
 <div class="content-wrap">
-<button class="floating-toc-toggle" type="button" data-toggle-toc>目录</button>
+<button class="icon-button floating-toc-toggle" type="button" data-toggle-toc aria-label="显示目录" title="显示目录">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16"></path><path d="M4 12h16"></path><path d="M4 18h16"></path></svg>
+</button>
 <main>
   <h1>[产品/页面名称] 产品需求文档</h1>
 
@@ -349,9 +354,16 @@ Output a standalone HTML document in Chinese unless the user requests otherwise.
     button.addEventListener('click', function () {
       var layout = document.getElementById('prdLayout');
       var collapsed = layout.classList.toggle('toc-collapsed');
-      document.querySelectorAll('[data-toggle-toc]').forEach(function (btn) {
-        btn.textContent = collapsed ? '目录' : (btn.classList.contains('toc-toggle') ? '隐藏' : '目录');
-      });
+      var sidebarToggle = document.querySelector('.toc-toggle');
+      var floatingToggle = document.querySelector('.floating-toc-toggle');
+      if (sidebarToggle) {
+        sidebarToggle.setAttribute('aria-label', collapsed ? '显示目录' : '隐藏目录');
+        sidebarToggle.setAttribute('title', collapsed ? '显示目录' : '隐藏目录');
+      }
+      if (floatingToggle) {
+        floatingToggle.setAttribute('aria-label', collapsed ? '显示目录' : '隐藏目录');
+        floatingToggle.setAttribute('title', collapsed ? '显示目录' : '隐藏目录');
+      }
     });
   });
 </script>
@@ -362,7 +374,7 @@ Output a standalone HTML document in Chinese unless the user requests otherwise.
 ## Rules
 
 - Generate the final PRD as an `.html` file or standalone HTML content. Do not generate a Markdown PRD unless the user explicitly asks for Markdown.
-- Put the PRD table of contents on the left side of the page. It must link to the main sections and support collapse/hide behavior with a visible toggle button.
+- Put the PRD table of contents on the left side of the page. It must link to the main sections and support collapse/hide behavior with icon-only toggle buttons. Do not use visible text labels such as `隐藏` or `目录` inside the toggle buttons; use icons plus `aria-label` and `title`.
 - Make the PRD illustrated with automatically captured screenshots: every concrete requirement description for a component must include an adjacent real screenshot or focused component image.
 - Do not use deferred screenshot labels, screenshot placeholders, or broken image references. If required screenshots cannot be captured, stop and report the blocker instead of delivering a completed PRD.
 - Pair screenshots with component paths and captions. The caption must include the full `页面-模块-组件名称` path and a concise explanation of what the image proves.
