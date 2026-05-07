@@ -1,0 +1,14 @@
+.DS_Store
+Thumbs.db
+
+screenshots/
+*.log
+
+.env
+.env.*
+!.env.example
+
+node_modules/
+dist/
+build/
+.cache/

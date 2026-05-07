@@ -1,0 +1,4 @@
+interface:
+  display_name: "HTML to PRD"
+  short_description: "从 HTML/CSS/JS 页面反向生成带自动截图的中文 HTML PRD"
+  default_prompt: "请根据提供的 HTML、CSS、JavaScript 或前端原型代码，自动截取页面与组件截图，生成一份图文并茂的结构化中文 HTML 产品需求文档，并明确区分代码已实现、页面推测需要和待确认事项。"
